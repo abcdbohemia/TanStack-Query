@@ -26,14 +26,13 @@ const PostList = () => {
                 return (
                     <div key={post.id}>
                         <div>{post.title}</div>
-                    <div/>
-    {post.tag && Array.isArray(post.tag) && post.tag.map((tag) => (
-        <span key={tag}>{tag}</span>
-    ))}
-                </div>
-            );
-        })}
-    </div>
+                    </div>
+                    {post.tag && Array.isArray(post.tag) && post.tag.map((tag) => (
+                    <span key={tag}>{tag}</span>
+                    ))}
+                );
+            })};
+        </div>
     );
 };
 
