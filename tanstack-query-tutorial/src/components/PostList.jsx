@@ -1,5 +1,5 @@
 import React from "react";
-import {useQuery, useMutation} from "@tanstack/react-query";
+import {useQuery, useMutation, useQueryClient} from "@tanstack/react-query";
 import {fetchPosts, addPosts, fetchTags} from "../api/api";
 
 const PostList = () => {
@@ -7,6 +7,8 @@ const PostList = () => {
         queryKey: ["posts"],
         queryFn: fetchPosts,
     });
+    
+const queryClient = useQueryClient();
 
 const {data: tagsData } = useQuery({
         queryKey: ["tags"],
@@ -21,6 +23,20 @@ const {
         reset,
     } = useMutation({
         mutationFn: addPosts,
+        onMutate: () => {
+            return {id:1}
+        },
+        onSuccess: (data, variables, context) => {
+            queryClient.invalidateQueries({
+                queryKey: ["posts"],
+                exact: true,
+                /* predicate: (query) =>
+                    query.queryKey[0] === "posts" && query.queryKey[1].page >= 2,
+                */
+            });
+        }, 
+        onError: (error, variables, context) => {},
+        onSettled: (data, error, variables, context) => {},
     });
 
     const handleSubmit = (e) => {
@@ -31,12 +47,28 @@ const {
             (key) => formData.get(key)==="on"
         );
 
-     if(!title || !tags) return
-        mutate({id: postData.length + 1, title, tags});
-        e.target.reset();
+        if(!title || !tags) return 
+                mutate({id: postData.length + 1, title, tags});
+                e.target.reset();
+            
+        }
+
+      /*  if (isLoading && isPending) {
+            return (
+                <div className="container">
+                    <p>Loading...</p>
+                </div>
+            );
+        } */
        
-       
-    }
+
+        if (!postData || !Array.isArray(postData)) {
+            return (
+                <div className="container">
+                    <p>No posts found or data format incorrect.</p>
+                </div>
+            );
+        }
 
     return (
         <div className="container">
@@ -59,23 +91,11 @@ const {
                 </div>
                 <button>Post</button>
             </form>
-        </div>
-    )
 
-    if (isLoading) {
-        return 
-            <div className="container">
-                <p>Loading...</p>
-            </div>;
-    }
-    if (!postData || !Array.isArray(postData)) {
-        return
-            <div className="container">
-                <p>No posts found or data format incorrect.</p>
-            </div>;
-    }
-    return (
-        <div className="container">
+            {isLoading && isPending && <p>Loading...</p>}
+            {isPostError && <p>{postError?.message}</p>}
+            {isPostError && <p onClick= {() => reset()}>Unable to post</p>}
+
             {postData.map((post) => {
                 return (
                     <div key={post.id} className="post">
