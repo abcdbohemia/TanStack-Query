@@ -1,5 +1,5 @@
 import React from "react";
-import {useQuery} from "@tanstack/react-query";
+import {useQuery, useMutation} from "@tanstack/react-query";
 import {fetchPosts, addPosts, fetchTags} from "../api/api";
 
 const PostList = () => {
@@ -8,12 +8,12 @@ const PostList = () => {
         queryFn: fetchPosts,
     });
 
-    const {data: tagsData } = useQuery({
+const {data: tagsData } = useQuery({
         queryKey: ["tags"],
         queryFn: fetchTags,
     })
-/*
-    const {
+
+const {
         mutate, 
         isError: isPostError, 
         isPending, 
@@ -22,7 +22,7 @@ const PostList = () => {
     } = useMutation({
         mutationFn: addPosts,
     });
-*/
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData(e.target)
@@ -31,6 +31,10 @@ const PostList = () => {
             (key) => formData.get(key)==="on"
         );
 
+     if(!title || !tags) return
+        mutate({id: postData.length + 1, title, tags});
+        e.target.reset();
+       
        
     }
 
