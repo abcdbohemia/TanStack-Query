@@ -6,7 +6,8 @@ function App() {
   
   return (
     <div>
-    <PostList />
+      <h2 className="title">My Posts</h2>
+      <PostList />
     </div>
   )
 }

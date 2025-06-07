@@ -24,11 +24,11 @@ const PostList = () => {
         <div className="container">
             {postData.map((post) => {
                 return (
-                    <div key={post.id}>
+                    <div key={post.id} className="post">
                         <div>{post.title}</div>
                         {post.tags && Array.isArray(post.tags) && 
-                            <div>
-                                {post.tags.map((tag) => (<span key={tag}>{tag}</span>))}
+                            <div className="tag-container">
+                                {post.tags.map((tag) => (<span key={tag} className="tag-span">{tag}</span>))}
                             </div>
                         }   
                     </div>
