@@ -19,7 +19,7 @@ const {
         mutate, 
         isError: isPostError, 
         isPending, 
-        error:postError, 
+        //error:postError, 
         reset,
     } = useMutation({
         mutationFn: addPosts,
@@ -93,7 +93,7 @@ const {
             </form>
 
             {isLoading && isPending && <p>Loading...</p>}
-            {isPostError && <p>{postError?.message}</p>}
+            {isPostError && <p>{error?.message}</p>}
             {isPostError && <p onClick= {() => reset()}>Unable to post</p>}
 
             {postData.map((post) => {
