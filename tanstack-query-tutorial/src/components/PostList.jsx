@@ -1,11 +1,21 @@
-import React from "react";
+import React, {useState} from "react";
 import {useQuery, useMutation, useQueryClient} from "@tanstack/react-query";
 import {fetchPosts, addPosts, fetchTags} from "../api/api";
 
 const PostList = () => {
-    const { data:postData, isLoading, error } = useQuery({
+
+    const {page, setPage} = useState(1);
+
+    const { 
+        data:postData, 
+        isError,
+        isLoading, 
+        error, 
+    } = useQuery({
         queryKey: ["posts"],
         queryFn: fetchPosts,
+        gcTime: 0,
+        refetchInterval: 1000*5,
     });
     
 const queryClient = useQueryClient();
@@ -13,6 +23,7 @@ const queryClient = useQueryClient();
 const {data: tagsData } = useQuery({
         queryKey: ["tags"],
         queryFn: fetchTags,
+        staleTime: Infinity,
     })
 
 const {
@@ -95,6 +106,12 @@ const {
             {isLoading && isPending && <p>Loading...</p>}
             {isPostError && <p>{error?.message}</p>}
             {isPostError && <p onClick= {() => reset()}>Unable to post</p>}
+
+            <div className="pages">
+                <button>Previous Page</button>
+                <span>{ page } </span>
+                <button>Next Page</button>
+            </div>
 
             {postData.map((post) => {
                 return (
