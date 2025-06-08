@@ -108,12 +108,14 @@ const {
             {isPostError && <p onClick= {() => reset()}>Unable to post</p>}
 
             <div className="pages">
-                <button>Previous Page</button>
+                <button onClick={() => setPage((oldPage) => Math.max(oldPage - 1, 0))}
+                    disabled={!postData?.prev}>Previous Page</button>
                 <span> { page } </span>
-                <button>Next Page</button>
+                <button onClick={() => setPage((oldPage) => oldPage + 1)}
+                    disabled={!postData?.next}>Next Page</button>
             </div>
 
-            {postData.data?.map((post) => {
+            {postData?.map((post) => {
                 return (
                     <div key={post.id} className="post">
                         <div>{post.title}</div>
