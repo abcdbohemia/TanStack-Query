@@ -61,3 +61,10 @@ body {
     display: flex;
     justify-content: space-around;
 }
+
+.pages {
+    justify-content: center;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}

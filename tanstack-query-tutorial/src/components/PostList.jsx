@@ -4,7 +4,7 @@ import {fetchPosts, addPosts, fetchTags} from "../api/api";
 
 const PostList = () => {
 
-    const {page, setPage} = useState(1);
+    const [page, setPage] = useState(1);
 
     const { 
         data:postData, 
@@ -12,8 +12,8 @@ const PostList = () => {
         isLoading, 
         error, 
     } = useQuery({
-        queryKey: ["posts"],
-        queryFn: fetchPosts,
+        queryKey: ["posts", {page}],
+        queryFn: () => fetchPosts(page),
         gcTime: 0,
         refetchInterval: 1000*5,
     });
@@ -59,7 +59,7 @@ const {
         );
 
         if(!title || !tags) return 
-                mutate({id: postData.length + 1, title, tags});
+                mutate({id: postData.data?.length + 1, title, tags});
                 e.target.reset();
             
         }
@@ -109,11 +109,11 @@ const {
 
             <div className="pages">
                 <button>Previous Page</button>
-                <span>{ page } </span>
+                <span> { page } </span>
                 <button>Next Page</button>
             </div>
 
-            {postData.map((post) => {
+            {postData.data?.map((post) => {
                 return (
                     <div key={post.id} className="post">
                         <div>{post.title}</div>
