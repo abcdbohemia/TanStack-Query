@@ -72,8 +72,11 @@ const {
             );
         } */
        
+    const posts = postData?.data || [];
+    const hasPreviousPage = postData?.prev;
+    const hasNextPage = postData?.next;
 
-        if (!postData || !Array.isArray(postData)) {
+        if (!posts || !Array.isArray(posts)) {
             return (
                 <div className="container">
                     <p>No posts found or data format incorrect.</p>
@@ -108,14 +111,14 @@ const {
             {isPostError && <p onClick= {() => reset()}>Unable to post</p>}
 
             <div className="pages">
-                <button onClick={() => setPage((oldPage) => Math.max(oldPage - 1, 0))}
-                    disabled={!postData?.prev}>Previous Page</button>
+                <button onClick={() => setPage((oldPage) => Math.max(oldPage - 1, 1))}
+                    disabled={!hasPreviousPage}>Previous Page</button>
                 <span> { page } </span>
                 <button onClick={() => setPage((oldPage) => oldPage + 1)}
-                    disabled={!postData?.next}>Next Page</button>
+                    disabled={!hasNextPage}>Next Page</button>
             </div>
 
-            {postData?.map((post) => {
+            {posts?.map((post) => {
                 return (
                     <div key={post.id} className="post">
                         <div>{post.title}</div>
