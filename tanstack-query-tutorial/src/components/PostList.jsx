@@ -30,15 +30,24 @@ const PostList = () => {
         staleTime: Infinity,
     });
 
-    const { mutate: addPostMutation, isPending: isAddingPost } = useMutation({
+    const { 
+        mutate: addPostMutation, 
+        isPending: isAddingPost, 
+        isError: isAddingPostError, 
+        error: addPostError, 
+        reset: resetAddPostMutation, 
+    } = useMutation({
         mutationFn: addPosts,
-        onMutate: (newPost) => {
-            queryClient.cancelQueries({ queryKey: ["posts"] });
-            const previousPosts = queryClient.getQueryData(["posts"]);
-            queryClient.setQueryData(["posts"], (old) => ({
+        onMutate: async (newPost) => {
+            queryClient.cancelQueries({ queryKey: ["posts", {page}] });
+            const previousPosts = queryClient.getQueryData(["posts", {page}]);
+            queryClient.setQueryData(["posts", {page}], (old) => {
+                const existingData = old?.data || [];
+                return {
                 ...old,
-                data: [...old.data, newPost],
-            }));
+                data: [newPost, ...existingData],
+            };
+        })
             return { previousPosts };
         },
         onSuccess: () => {
