@@ -1,138 +1,120 @@
-import React, {useState} from "react";
-import {useQuery, useMutation, useQueryClient} from "@tanstack/react-query";
-import {fetchPosts, addPosts, fetchTags} from "../api/api";
+import React, { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { fetchPosts, addPosts, fetchTags } from "../api/api";
 
 const PostList = () => {
-
     const [page, setPage] = useState(1);
+    const queryClient = useQueryClient();
 
-    const { 
-        data:postData, 
-        isError,
-        isLoading, 
-        error, 
+    const {
+        data: postData,
+        isLoading: arePostsLoading,
+        isError: arePostsError,
+        error: postsError,
+        isFetching: isPostsFetching,
     } = useQuery({
-        queryKey: ["posts", {page}],
+        queryKey: ["posts", { page }],
         queryFn: () => fetchPosts(page),
-        staleTime: 1000 * 60 * 5
-       // gcTime: 0,
-       // refetchInterval: 1000*5,
+        staleTime: 1000 * 60 * 5,
+        keepPreviousData: true,
     });
-    
-const queryClient = useQueryClient();
 
-const {data: tagsData } = useQuery({
+    const {
+        data: tagsData,
+        isLoading: areTagsLoading,
+        isError: areTagsError,
+        error: tagsError,
+    } = useQuery({
         queryKey: ["tags"],
         queryFn: fetchTags,
         staleTime: Infinity,
-    })
+    });
 
-const {
-        mutate, 
-        isError: isPostError, 
-        isPending, 
-        //error:postError, 
-        reset,
-    } = useMutation({
+    const { mutate: addPostMutation, isPending: isAddingPost } = useMutation({
         mutationFn: addPosts,
-        onMutate: () => {
-            return {id:1}
+        onMutate: (newPost) => {
+            queryClient.cancelQueries({ queryKey: ["posts"] });
+            const previousPosts = queryClient.getQueryData(["posts"]);
+            queryClient.setQueryData(["posts"], (old) => ({
+                ...old,
+                data: [...old.data, newPost],
+            }));
+            return { previousPosts };
         },
-        onSuccess: (data, variables, context) => {
-            queryClient.invalidateQueries({
-                queryKey: ["posts"],
-                exact: true,
-                /* predicate: (query) =>
-                    query.queryKey[0] === "posts" && query.queryKey[1].page >= 2,
-                */
-            });
-        }, 
-        onError: (error, variables, context) => {},
-        onSettled: (data, error, variables, context) => {},
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["posts"], exact: true });
+        },
+        onError: (error, variables, context) => {
+            console.error("Error adding post:", error);
+            if (context?.previousPosts) {
+                queryClient.setQueryData(["posts"], context.previousPosts);
+            }
+        },
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const formData = new FormData(e.target)
+        const formData = new FormData(e.target);
         const title = formData.get("title");
-        const tags = Array.from(formData.keys()).filter(
-            (key) => formData.get(key)==="on"
-        );
+        const tags = Array.from(formData.keys()).filter((key) => formData.get(key) === "on");
 
-        if(!title || !tags) return 
-                mutate({id: postData.data?.length + 1, title, tags});
-                e.target.reset();
-            
+        if (!title || tags.length === 0) {
+            alert("Please enter a title and select at least one tag.");
+            return;
         }
 
-      /*  if (isLoading && isPending) {
-            return (
-                <div className="container">
-                    <p>Loading...</p>
-                </div>
-            );
-        } */
-       
+        addPostMutation({ title, tags });
+        e.target.reset();
+    };
+
     const posts = postData?.data || [];
     const hasPreviousPage = postData?.prev;
     const hasNextPage = postData?.next;
 
-        if (!posts || !Array.isArray(posts)) {
-            return (
-                <div className="container">
-                    <p>No posts found or data format incorrect.</p>
-                </div>
-            );
-        }
-
     return (
         <div className="container">
             <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    placeholder="Enter your post..."
-                    className="postbox"
-                    name="title"
-                />
+                <input type="text" placeholder="Enter your post..." name="title" disabled={isAddingPost} />
                 <div className="tags">
-                    {tagsData?.map((tag) => {
-                        return (
+                    {areTagsLoading && <p>Loading tags...</p>}
+                    {areTagsError && <p style={{ color: "red" }}>Error loading tags: {tagsError?.message}</p>}
+                    {!areTagsLoading &&
+                        !areTagsError &&
+                        tagsData?.map((tag) => (
                             <div key={tag}>
                                 <input name={tag} id={tag} type="checkbox" />
                                 <label htmlFor={tag}>{tag}</label>
                             </div>
-                        )
-                    })}
+                        ))}
                 </div>
-                <button>Post</button>
+                <button type="submit" disabled={isAddingPost}>{isAddingPost ? "Posting..." : "Post"}</button>
             </form>
-
-            {isLoading && isPending && <p>Loading...</p>}
-            {isPostError && <p>{error?.message}</p>}
-            {isPostError && <p onClick= {() => reset()}>Unable to post</p>}
-
             <div className="pages">
-                <button onClick={() => setPage((oldPage) => Math.max(oldPage - 1, 1))}
-                    disabled={!hasPreviousPage}>Previous Page</button>
-                <span> { page } </span>
-                <button onClick={() => setPage((oldPage) => oldPage + 1)}
-                    disabled={!hasNextPage}>Next Page</button>
+                <button onClick={() => setPage((oldPage) => Math.max(oldPage - 1, 1))} disabled={!hasPreviousPage}>
+                    Previous Page
+                </button>
+                <span>{page}</span>
+                <button onClick={() => setPage((oldPage) => oldPage + 1)} disabled={!hasNextPage || isPostsFetching}>
+                    Next Page
+                </button>
+                {isPostsFetching && <p>Fetching more posts...</p>}
             </div>
-
-            {posts?.map((post) => {
-                return (
-                    <div key={post.id} className="post">
-                        <div>{post.title}</div>
-                        {post.tags && Array.isArray(post.tags) && 
-                            <div className="tag-container">
-                                {post.tags.map((tag) => (<span key={tag} className="tag-span">{tag}</span>))}
-                            </div>
-                        }   
-                    </div>
-                );
-            })};
+            {posts?.map((post) => (
+                <div key={post.id} className="post">
+                    <div>{post.title}</div>
+                    {post.tags && Array.isArray(post.tags) && (
+                        <div className="tag-container">
+                            {post.tags.map((tag) => (
+                                <span key={tag} className="tag-span">
+                                    {tag}
+                                </span>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            ))}
         </div>
     );
 };
 
-export default PostList; 
+export default PostList;
