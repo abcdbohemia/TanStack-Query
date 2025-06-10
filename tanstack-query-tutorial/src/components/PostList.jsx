@@ -84,6 +84,7 @@ const PostList = () => {
         <div className="container">
             <form onSubmit={handleSubmit}>
                 <input type="text" placeholder="Enter your post..." name="title" disabled={isAddingPost} />
+                {isAddingPostError && <p style={{ color: "red"}}>Error addiing post: {addPostError?.message}</p>}
                 <div className="tags">
                     {areTagsLoading && <p>Loading tags...</p>}
                     {areTagsError && <p style={{ color: "red" }}>Error loading tags: {tagsError?.message}</p>}
@@ -108,7 +109,9 @@ const PostList = () => {
                 </button>
                 {isPostsFetching && <p>Fetching more posts...</p>}
             </div>
-            {posts?.map((post) => (
+            {arePostsLoading && <p>Loading posts...</p>}
+            {arePostsError && <p style={{ color: "red" }}>Error loading posts: {postsError?.message}</p>}
+            {!arePostsLoading && !arePostsError && posts?.map((post) => (
                 <div key={post.id} className="post">
                     <div>{post.title}</div>
                     {post.tags && Array.isArray(post.tags) && (
