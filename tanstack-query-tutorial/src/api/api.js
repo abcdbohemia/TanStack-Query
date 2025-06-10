@@ -11,13 +11,13 @@ const fetchTags = async () => {
     return tagsData;
 };
 
-const addPosts = async (post) => {
+const addPosts = async (newPost) => {
     const response = await fetch(`http://localhost:3001/posts`, {
         method: "POST",
         headers: {
             "Content-Type": "Application/json",
         },
-        body: JSON.stringify(post),
+        body: JSON.stringify(newPost),
     });
 
     return response.json();

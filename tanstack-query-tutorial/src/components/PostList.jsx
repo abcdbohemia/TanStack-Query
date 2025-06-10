@@ -4,7 +4,7 @@ import { fetchPosts, addPosts, fetchTags } from "../api/api";
 
 const PostList = () => {
     const [page, setPage] = useState(1);
-    const queryClient = useQueryClient();
+    const queryClient = useQueryClient();  // why do we need a query client?
 
     const {
         data: postData,
@@ -13,10 +13,10 @@ const PostList = () => {
         error: postsError,
         isFetching: isPostsFetching,
     } = useQuery({
-        queryKey: ["posts", { page }],
+        queryKey: ["posts", { page }], //On first render pg # is one because of useState
         queryFn: () => fetchPosts(page),
-        staleTime: 1000 * 60 * 5,
-        keepPreviousData: true,
+        staleTime: 1000 * 60 * 5, //for 5seconds data is fresh.. data comes from cache! no network requests
+        keepPreviousData: true, //when page changes there is no flicker between old and new page
     });
 
     const {
@@ -27,36 +27,36 @@ const PostList = () => {
     } = useQuery({
         queryKey: ["tags"],
         queryFn: fetchTags,
-        staleTime: Infinity,
+        staleTime: Infinity, //data always fresh, always fetched from cache, no automatic network requests//can be overriden with queryClient.invalidateQueries({queryKey:["tags"]})
     });
 
     const { 
-        mutate: addPostMutation, 
+        mutate: addPostMutation, // always takes a parameter which is an object //calling mutate executes mutationFn
         isPending: isAddingPost, 
         isError: isAddingPostError, 
         error: addPostError, 
         reset: resetAddPostMutation, 
     } = useMutation({
         mutationFn: addPosts,
-        onMutate: async (newPost) => {
-            queryClient.cancelQueries({ queryKey: ["posts", {page}] });
-            const previousPosts = queryClient.getQueryData(["posts", {page}]);
-            queryClient.setQueryData(["posts", {page}], (old) => {
-                const existingData = old?.data || [];
+        onMutate: async (newPost) => { //newPost is addPostMutation({ title, tags }); //this happens before mutationFn
+            queryClient.cancelQueries({ queryKey: ["posts", {page}] }); //stops currently running or pending fetches
+            const previousPosts = queryClient.getQueryData(["posts", {page}]); // get snapshot of data from cache
+            queryClient.setQueryData(["posts", {page}], (old) => { //edit the data in the cache //old is the entire object
+                const existingData = old?.data || []; //updater function
                 return {
-                ...old,
-                data: [newPost, ...existingData],
+                ...old, //entire old object
+                data: [newPost, ...existingData], //setQuery puts this data into the cash //optimistic update
             };
         })
-            return { previousPosts };
+            return { previousPosts }; //context for onError onSettled callbacks
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["posts"], exact: true });
+            queryClient.invalidateQueries({ queryKey: ["posts", {page}] }); //cached data stale and should be refetched
         },
         onError: (error, variables, context) => {
             console.error("Error adding post:", error);
             if (context?.previousPosts) {
-                queryClient.setQueryData(["posts"], context.previousPosts);
+                queryClient.setQueryData(["posts", {page}], context.previousPosts);
             }
         },
     });
@@ -84,7 +84,7 @@ const PostList = () => {
         <div className="container">
             <form onSubmit={handleSubmit}>
                 <input type="text" placeholder="Enter your post..." name="title" disabled={isAddingPost} />
-                {isAddingPostError && <p style={{ color: "red"}}>Error addiing post: {addPostError?.message}</p>}
+                {isAddingPostError && <p style={{ color: "red"}}>Error adding post: {addPostError?.message}</p>}
                 <div className="tags">
                     {areTagsLoading && <p>Loading tags...</p>}
                     {areTagsError && <p style={{ color: "red" }}>Error loading tags: {tagsError?.message}</p>}
