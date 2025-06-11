@@ -7,7 +7,7 @@ const PostList = () => {
     const queryClient = useQueryClient();  // why do we need a query client?
 
     const {
-        data: postData,
+        data: postData, //data itself is an object which has a property of data on it as well
         isLoading: arePostsLoading,
         isError: arePostsError,
         error: postsError,
@@ -31,7 +31,7 @@ const PostList = () => {
     });
 
     const { 
-        mutate: addPostMutation, // always takes a parameter which is an object //calling mutate executes mutationFn
+        mutate: addPostMutation, // addPostMutation always takes a parameter which is an object //calling mutate executes onMutate and then mutationFn
         isPending: isAddingPost, 
         isError: isAddingPostError, 
         error: addPostError, 
@@ -55,31 +55,32 @@ const PostList = () => {
         },
         onError: (error, variables, context) => {
             console.error("Error adding post:", error);
-            if (context?.previousPosts) {
-                queryClient.setQueryData(["posts", {page}], context.previousPosts);
+            if (context?.previousPosts) { //snapshot of cache data from onMutate for rollback
+                queryClient.setQueryData(["posts", {page}], context.previousPosts); //revert the cache for this query key with the saved previous data snapshot
             }
         },
     });
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const title = formData.get("title");
-        const tags = Array.from(formData.keys()).filter((key) => formData.get(key) === "on");
-
+        e.preventDefault(); // to dynamically update small parts of the page instead of full page reload
+        const formData = new FormData(e.target); // e.target refers to <form onSubmit{handleSubmit}>
+        const title = formData.get("title"); //gets the value associated with the title key
+        const tags = Array.from(formData.keys()).filter((key) => formData.get(key) === "on"); //formData.key collects all name attributes ex: title, classic, crime
+                                                    //gets value associated with the name attributes
         if (!title || tags.length === 0) {
             alert("Please enter a title and select at least one tag.");
             return;
         }
 
-        addPostMutation({ title, tags });
+        addPostMutation({ title, tags }); //call the mutate function
         e.target.reset();
     };
 
-    const posts = postData?.data || [];
-    const hasPreviousPage = postData?.prev;
-    const hasNextPage = postData?.next;
-
+    const posts = postData?.data || []; //an array of posts
+    const hasPreviousPage = postData?.prev; //matadata (can see in tanStack Query devtools)
+    const hasNextPage = postData?.next; //matadata (can see in tanStack Query devtools)
+//Logic and values for prev and next originate on the server side
+//The complete HTTP response which is from the internal browser process memory holds the previous next
     return (
         <div className="container">
             <form onSubmit={handleSubmit}>
@@ -92,14 +93,14 @@ const PostList = () => {
                         !areTagsError &&
                         tagsData?.map((tag) => (
                             <div key={tag}>
-                                <input name={tag} id={tag} type="checkbox" />
+                                <input name={tag} id={tag} type="checkbox" /> 
                                 <label htmlFor={tag}>{tag}</label>
                             </div>
                         ))}
                 </div>
                 <button type="submit" disabled={isAddingPost}>{isAddingPost ? "Posting..." : "Post"}</button>
             </form>
-            <div className="pages">
+            <div className="pages">   
                 <button onClick={() => setPage((oldPage) => Math.max(oldPage - 1, 1))} disabled={!hasPreviousPage}>
                     Previous Page
                 </button>
