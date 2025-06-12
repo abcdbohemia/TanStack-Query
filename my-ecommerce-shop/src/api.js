@@ -35,12 +35,12 @@ export const fetchProductById = async (id) => {
 
 //Function to fatch all product categories 
 export const fetchCategories = async () => {
-    const response = await fetch(`${API_BASE_URL}/products/categories`);
+    const response = await fetch(`${API_BASE_URL}/products/categories`); //returns all categories
     return
     handleResponse(response);
 };
 
-//Placeholder for future Mutation Dunctions (e.g. for an admin panel or cart)
+//Placeholder for future Mutation Functions (e.g. for an admin panel or cart)
 export const createProduct = async (newProduct) => {
     const response = await fetch(`${API_BASE_URL}/products`, {
         method: 'POST',
