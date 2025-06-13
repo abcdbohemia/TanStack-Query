@@ -45,7 +45,7 @@ function ProductDetail() {
                     <div>
                         <h1 className="product-detail-title">{product.title}</h1>
                         <p className="product-detail-category">{product.category}</p>
-                        <p className="product-detail-price">${product.price.toFix(2)}</p>
+                        <p className="product-detail-price">${product.price.toFixed(2)}</p>
                         <p className="product-detail-description">{product.description}</p>
                     </div>
                     <div className="product-detail-actions">

@@ -12,7 +12,8 @@ export default defineConfig({
       '/api': {
         target: 'https://fakestoreapi.com',
         changeOrigin: true, //Needed for virtual hosted sites
-        rewrite: (path) => path.replace(/^\api/, ''), 
+        rewrite: (path) => path.replace(/^\/api/, ''), 
+        // "Find the exact text /api only if it appears at the very beginnign of the path string"
         //remove api prefix when forwarding
         secure: false 
         //Set to if target is HTTPS and you want to validate SSL certs
