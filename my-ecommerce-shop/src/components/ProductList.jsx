@@ -24,7 +24,7 @@ function ProductList() {
     return (
         <div className="product-list-grid">
             {products.map(product => (
-                <div key={products.id} className="product-card">
+                <div key={product.id} className="product-card">
                     <Link to={`/products/${product.id}`} className="product-card-link">
                         <img
                             src={product.image}
@@ -42,3 +42,5 @@ function ProductList() {
         </div>
     );
 }
+
+export default ProductList;

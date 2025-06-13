@@ -1,10 +1,14 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { fetchProductById } from '../api';         
+import { fetchProductById } from '../api';
+
+//useParams is a React Hook. It allows functional components to access URL parameters
 
 function ProductDetail() {
-    const { id } = useParams();
+    const { id } = useParams(); //accessing the id of the route path from App.jsx 
+    //With destructuring we're extracting a property from the object on the rught
+    // useParams always returns Key: value pairs
 
     const { 
         data: product, 
@@ -13,7 +17,7 @@ function ProductDetail() {
         error } = useQuery ({
             queryKey: ['product', id],
             queryFn: () => fetchProductById(id),   // were using an arrow fucntion because were passing the id 
-            enabled: !!id,
+            enabled: !!id, // if id is truthy, dame as 'enabled: id'
         });
     if (isLoading) {
         return <div className="loading message">Loading product details...</div>;
@@ -46,10 +50,12 @@ function ProductDetail() {
                     </div>
                     <div className="product-detail-actions">
                         <button className="add-to-cart-button">Add to Cart</button>
-                        <Link to="/products" className="back-to-products-link">Back to Products</Link> ///we havent imported Link ???
+                        <Link to="/products" className="back-to-products-link">Back to Products</Link> 
                     </div>
                 </div>
             </div>
         </div>
     );
 }
+
+export default ProductDetail;
