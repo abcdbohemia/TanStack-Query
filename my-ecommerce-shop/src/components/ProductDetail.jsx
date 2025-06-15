@@ -21,7 +21,7 @@ function ProductDetail() {
             enabled: !!id, // if id is truthy, dame as 'enabled: id'
         });
     if (isLoading) {
-        return <div className="loading message">Loading product details...</div>;
+        return <div className="loading-message">Loading product details...</div>;
     }
 
     if (isError) {

@@ -16,6 +16,8 @@
 
 .product-card-link {
     display: block;   
+    display: flex;
+    justify-content: center;
 }
 /*what is display block?*/
 
