@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchProducts } from '../api'; 
 import { Link } from 'react-router-dom';
+import './ProductList.css';
 
 function ProductList() {
     const { 

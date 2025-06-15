@@ -3,7 +3,7 @@ import {Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import ProductList from './components/ProductList';
 import ProductDetail from './components/ProductDetail';
-import './App.css'
+import './App.css';
 
 //we're importing the Link with Navbar import
 // Link is the trigger, while Route is the "destination"
