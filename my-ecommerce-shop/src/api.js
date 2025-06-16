@@ -1,5 +1,8 @@
 //Change the base URL to point to your local proxy prefix
 const API_BASE_URL = '/api';
+//this baseURL is the localhost address and port where vite dev server is running
+//In development my frontend makes a request to my local Vite Dev Server and thats where the '/api' is sent
+//In production my frontend makes a request to  my hosting platform's server such as netlify and thats where the '/api' is sent
 //This will be proxied to https://fakestoreapi.com
 
 //Helper function to handle fetch responses and errors
