@@ -24,7 +24,10 @@ export const fetchProducts = async (filters = {}) => {
     const url = filters.category? `${API_BASE_URL}/products/category/${filters.category}` 
     : `${API_BASE_URL}/products`;
 
-    const response = await fetch(`${url}?${params.toString()}`);
+    //Conditionally add the query string
+    const fullUrl= params.toString() ? `${url}?${params.toString()}` :url;
+
+    const response = await fetch(fullUrl);
     return handleResponse(response);
 };
 //So the URLSearchParams is what goes a the end of the url?
