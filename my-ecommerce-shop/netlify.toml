@@ -6,4 +6,4 @@
     from = "/*"                                                     
     to = "/index.html"
     status = 200
-#This is a test comment to see if Netlify recognizes the update
+#This is a test 
