@@ -60,7 +60,7 @@ export const createProduct = async (newProduct) => {
 export const updateProduct = async (id, updatedProduct) => {
     const response = await fetch(`${API_BASE_URL}/products/${id}`, {
         method: 'POST',
-        header: {
+        headers: {
             'Content-Type': 'application/json',
         }, 
         body: JSON.stringify(updatedProduct),
