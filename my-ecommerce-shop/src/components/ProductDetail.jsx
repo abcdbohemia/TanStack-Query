@@ -18,7 +18,7 @@ function ProductDetail() {
         error } = useQuery ({
             queryKey: ['product', id],
             queryFn: () => fetchProductById(id),   // were using an arrow fucntion because were passing the id 
-            enabled: !!id, // if id is truthy, dame as 'enabled: id'
+            enabled: !!id, // if id is truthy, same as 'enabled: id'
         });
     if (isLoading) {
         return <div className="loading-message">Loading product details...</div>;

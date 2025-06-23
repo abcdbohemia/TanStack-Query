@@ -3,6 +3,10 @@ import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom'; //for "continue shopping" button
 import './Cart.css'; //We'll create this CSS
 
+
+//For a component such as this Cart.js to access a context's value (from CartContext.jsx) 
+// and subscribe to its updates, it must be rendered as a descendant of the Context.Provider 
+// and explicitly consume the context using the useContext hook (useCart()).
 const Cart = () => {
   const { cartItems, removeFromCart, updateQuantity, getTotalPrice, clearCart } = useCart();
 
