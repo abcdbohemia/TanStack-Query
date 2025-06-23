@@ -27,3 +27,9 @@ function App() {
 }
 
 export default App
+
+
+//while App.jsx doesn't directly import { Link } from 'react-router-dom', 
+// it renders Navbar which does, and more importantly, App.jsx provides 
+// the Routes component which responds to the URL changes initiated by 
+// Link components operating within the overall BrowserRouter context.
