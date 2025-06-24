@@ -23,6 +23,11 @@ function ProductDetail() {
             queryFn: () => fetchProductById(id),   // were using an arrow fucntion because were passing the id 
             enabled: !!id, // if id is truthy, same as 'enabled: id'
         });
+    const handleAddToCart = () => {
+        if (product) { 
+            addToCart(product, quantity)
+        }
+    }   
     if (isLoading) {
         return <div className="loading-message">Loading product details...</div>;
     }
