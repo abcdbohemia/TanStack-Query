@@ -24,9 +24,14 @@ function ProductDetail() {
             enabled: !!id, // if id is truthy, same as 'enabled: id'
         });
     const handleAddToCart = () => {
+        console.log('handleAddToCart clicked in ProductDetail');
         if (product) { 
+            console.log('Adding product:', product.title, 'with quantity:', quantity);
             addToCart(product, quantity)
-        }
+        } else {
+        console.log('Product not loaded yet in ProductDetail.'); // <-- ADD THIS
+    }
+    
     }   
     if (isLoading) {
         return <div className="loading-message">Loading product details...</div>;

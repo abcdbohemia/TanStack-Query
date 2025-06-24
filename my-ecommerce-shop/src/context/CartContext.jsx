@@ -23,9 +23,13 @@ export const CartProvider = ({ children }) => {
     }, [cartItems]);
 
     //utility/action function 
-    const addToCart = (product) => {setCartItems(prevItems => {
+    const addToCart = (product, quantityToAdd = 1) => {
+        console.log('addToCart function in CartContext called for product:', product?.title, 'with quantity:', quantityToAdd);
+        setCartItems(prevItems => {
+        console.log('Current cart items (prevItems):', prevItems);
         //find= "isolate"
         const existingItem = prevItems.find(item => item.id === product.id);
+        let newCartItems;
         if (existingItem) {
             //If item exists, increase quantity// //map method is used to create a new array by transforming each
             //element in an existing array//
@@ -34,11 +38,12 @@ export const CartProvider = ({ children }) => {
             // change in the state variable's reference, and your UI wouldn't update.
             //any object or array that becomes part of your React state must be treated immutably. 
             // This applies not just to the top-level state variable (cartItems array itself) but also to the individual objects inside that array.
-            return prevItems.map(item => item.id === product.id ? { ...item, quantity:item.quantity + 1 } : item ); 
+            newCartItems = prevItems.map(item => item.id === product.id ? { ...item, quantity:item.quantity + quantityToAdd } : item ); 
         } else {
             //If item is new, add it with quantity 1//
-            return [...prevItems, {...product, quantity: 1 }];
+            newCartItems = [...prevItems, {...product, quantity: quantityToAdd }];
         }
+        console.log('New cart items (after update logic):', newCartItems);
         });
     };
 

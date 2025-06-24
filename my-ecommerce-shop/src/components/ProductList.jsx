@@ -39,8 +39,10 @@ function ProductList() {
                         <h2 className="product-card-title">{product.title}</h2>
                         <p className="product-card-price">${product.price.toFixed(2)}</p>
                         <Link to={`/products/${product.id}`} className="product-card-button">View Details</Link>
-                        <button onClick={() => addToCart(product)} className="product-card-button add-to-cart">
-                            Add to Cart
+                        <button onClick={() => {
+                            console.log('Add to Cart clicked in ProductList for product:', product.title);
+                            addToCart(product)}} className="product-card-button add-to-cart">
+                            Add to
                         </button>
                     </div>
                 </div>
