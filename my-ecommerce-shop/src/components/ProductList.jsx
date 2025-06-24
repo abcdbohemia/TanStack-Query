@@ -2,9 +2,11 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchProducts } from '../api'; 
 import { Link } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 import './ProductList.css';
 
 function ProductList() {
+    const { addToCart } = useCart();
     const { 
         data: products, 
         isLoading, 
@@ -37,6 +39,9 @@ function ProductList() {
                         <h2 className="product-card-title">{product.title}</h2>
                         <p className="product-card-price">${product.price.toFixed(2)}</p>
                         <Link to={`/products/${product.id}`} className="product-card-button">View Details</Link>
+                        <button onClick={() => addToCart(product)} className="product-card-button add-to-cart">
+                            Add to Cart
+                        </button>
                     </div>
                 </div>
             ))}

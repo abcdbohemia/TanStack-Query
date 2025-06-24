@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetchProductById } from '../api';
+import { useCart } from '../context/CartContext';
 import './ProductDetail.css';
 
 //useParams is a React Hook. It allows functional components to access URL parameters
 
 function ProductDetail() {
     const { id } = useParams(); //accessing the id of the route path from App.jsx 
-    //With destructuring we're extracting a property from the object on the rught
+    //With destructuring we're extracting a property from the object on the right
     // useParams always returns Key: value pairs
+    const { addToCart } = useCart();
+    const [quantity, setQuantity] = useState(1);
 
     const { 
         data: product, 
@@ -50,7 +53,17 @@ function ProductDetail() {
                         <p className="product-detail-description">{product.description}</p>
                     </div>
                     <div className="product-detail-actions">
-                        <button className="add-to-cart-button">Add to Cart</button>
+                    <div className="quantity-selector">
+                        <label htmlFor="quantity">Quantity:</label>
+                        <input 
+                            type="number"
+                            id="quantity"
+                            min="1"
+                            value={quantity}
+                            onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+                        />
+                    </div>
+                        <button className="add-to-cart-button" onClick={handleAddToCart}>Add to Cart</button>
                         <Link to="/products" className="back-to-products-link">Back to Products</Link> 
                     </div>
                 </div>

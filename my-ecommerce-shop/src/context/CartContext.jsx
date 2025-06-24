@@ -22,6 +22,7 @@ export const CartProvider = ({ children }) => {
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
     }, [cartItems]);
 
+    //utility/action function 
     const addToCart = (product) => {setCartItems(prevItems => {
         //find= "isolate"
         const existingItem = prevItems.find(item => item.id === product.id);
@@ -50,7 +51,7 @@ export const CartProvider = ({ children }) => {
         setCartItems(prevItems => {
             if (newQuantity <= 0) {
                 return 
-                prevItems.filter(item => item.id !==productId); 
+                prevItems.filter(item => item.id !== productId); 
                 //Remove if quantity is 0 or less
             }
             return prevItems.map(item => item.id === productId ? { ...item, quantity: newQuantity} : item );
