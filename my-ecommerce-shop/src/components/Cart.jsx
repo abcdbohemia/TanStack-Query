@@ -1,7 +1,7 @@
 import React from "react";
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom'; //for "continue shopping" button
-import './Cart.css'; //We'll create this CSS
+//import './Cart.css'; //We'll create this CSS
 
 
 //For a component such as this Cart.js to access a context's value (from CartContext.jsx) 
