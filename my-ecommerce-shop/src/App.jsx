@@ -3,6 +3,7 @@ import {Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import ProductList from './components/ProductList';
 import ProductDetail from './components/ProductDetail';
+import CartPage from './components/CartPage';
 import './App.css';
 
 //we're importing the Link with Navbar import
@@ -20,6 +21,8 @@ function App() {
           <Route path="/" element={<ProductList />} />
           <Route path="/products" element={<ProductList />} />
           <Route path="/products/:id" element={<ProductDetail />} /> 
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="*" element={<div><h1>404: Page Not Found</h1><p>Sorry, the page you are looking for does not exist.</p></div>} />
         </Routes>
       </main>
     </>

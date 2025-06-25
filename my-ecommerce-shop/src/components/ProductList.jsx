@@ -42,7 +42,7 @@ function ProductList() {
                         <button onClick={() => {
                             console.log('Add to Cart clicked in ProductList for product:', product.title);
                             addToCart(product)}} className="product-card-button add-to-cart">
-                            Add to
+                            Add to Cart
                         </button>
                     </div>
                 </div>
