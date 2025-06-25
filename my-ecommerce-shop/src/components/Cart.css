@@ -1,0 +1,246 @@
+.cart-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 25px;
+    background-color: #616886;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(29, 77, 94, 0.742);
+}
+
+.cart-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+
+.cart-empty {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.cart-empty p {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 25px;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 15px 0;
+    border-bottom: 1px solid #55596d
+}
+
+.cart-item:last-child {
+    border-bottom: none;  /*whats the point of this*/
+}
+
+.cart-item-image {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    border-radius: 4px;
+    border: 1px solid #25318a;
+    padding: 5px;
+    background-color: #0f0f0f;
+}
+
+.cart-item-title-details {
+    flex-grow: 1; /*exactly how does this work*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /*what does this do*/
+}
+
+.cart-item-title-link {
+    text-decoration: none;
+    color: #333;
+}
+
+.cart-item-title-link h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.2em;
+    color: #034082;
+    transition: color 0.2 ease-in-out;
+}
+
+.cart-item-title-link h3:hover {
+    color: #0056b3;
+}
+
+.cart-item-price {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #28a745;
+    margin-bottom: 10px;
+}
+
+.cart-item-quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.cart-item-quantity-controls button {
+    background-color: #1a667d;
+    border: 1px solid #206f91;
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: 1em;
+    font-size: 1em;
+    transition: background-color 0.2s;
+}
+/*How doe not() work? */
+.cart-item-quantity-controls button:hover:not(:disabled) {
+    background-color: #48a5c2;
+}
+
+.cart-item-quantity-controls button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.cart-item-quantity-controls span {
+    font-size: 1.1em;
+    font-weight: bold;
+    min-width: 25px; /*so this in dittion to the gap?*/
+    text-align: center;
+}
+
+.cart-item-remove-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s;
+}
+
+.cart-item-remove-button:hover {
+    background-color: #c82333;
+}
+
+.cart-summary {
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    text-align: right;
+    margin-top: 20px;
+}
+
+.cart-summary h3 {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.cart-actions {
+    display: flex;
+    justify-content: flex-end; /*What does this do?*/
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.clear-cart-button, 
+.checkout-button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+}
+
+.clear-cart-button {
+    background-color: #f0ad42;
+    color: white;
+}
+
+.clear-cart-button:hover {
+    background-color: #ec971f;
+    transform: translateY(-1px);
+}
+
+.continue-shopping-button {
+    display: inline-block; /*What is this for?*/
+    margin-top: 25px;
+    padding: 10px 20px;
+    background-color: #6c757d;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+    font-size: 1em;
+}
+
+.continue-shopping-button:hover {
+    background-color: #5a6268;
+    transform: translateY(-1px);
+}
+
+/*Responsive adjustments */@media (max-width: 768px) {
+    .cart-item {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+
+    .cart-item-image {
+        width: 80px;
+        height: 80px;
+    }
+
+    .cart-item-details {
+        align-items: center;
+    }
+
+    .cart-tem-remove-button {
+        align-self: center; /*what is align-self? */
+    }
+
+    .cart-actions {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 10px;
+    }
+
+    .clear-cart-button, 
+    .checkout-button {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .cart-container {
+        padding: 15px;
+        margin: 20px auto;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
