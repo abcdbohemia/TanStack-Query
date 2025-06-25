@@ -3,6 +3,8 @@
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
     padding: 1rem;
+    max-width: 1200px; /* Optional: Constrain max width for very large screens */
+    margin: 0 auto; /* Center the grid */
 }
 
 .product-card {
@@ -12,20 +14,27 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    background-color: white;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-.product-card-link {
-    display: block;   
-    display: flex;
-    justify-content: center;
+.product-card:hover {
+    transform: translateY(-5px); /* Lift card slightly on hover */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15); /* More prominent shadow on hover */
 }
-/*what is display block?*/
+
+
+.product-card-link {
+    display: flex;
+    justify-content: center; /* Vertically centers the image within the link (useful if image height varies)*/
+    padding: 0.5rem; /* Padding around the image */
+    }
+
 
 .product-card-image {
     width: 100%;
     height: 12rem;
     object-fit: contain; /*scales image down without cropping*/
-    padding: 1rem;
     background-color: white;
 }
 
@@ -34,32 +43,78 @@
     flex-grow: 1; /* allow this section to expand and fill available space*/
     display: flex;
     flex-direction: column;
+    justify-content: space-between; /* Distributes space between items vertically */
 }
 
 .product-card-title {
     font-size: 1.125rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
-    flex-grow: 1;
+    flex-grow: 1; /* Allows the title to take up available vertical space, pushing price/buttons down */
+    line-height: 1.3; /* Adjust line height for multi-line titles */
 }
 
 .product-card-price {
     color: #4e5568;
     margin-bottom: 1rem;
+    font-weight: 700; /* Bold price */
+    font-size: 1.2rem; /* Slightly larger price */
 }
 
 .product-card-button {
-    display: block;
-    margin-top: 1rem;
-    background-color: #3b82f6;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 0.25rem;
-    text-align: center;
-    text-decoration: none;
-    transition: background-color 0.2s ease-in-out;
+    display: block; /* Makes the button take full width and stack */
+    margin-top: 1rem; /* Space above the button */
+    background-color: #3b82f6; /* Blue background */
+    color: white; /* White text */
+    padding: 0.6rem 1rem; /* Padding inside the button */
+    border-radius: 0.25rem; /* Rounded corners */
+    text-align: center; /* Center text within the button */
+    text-decoration: none; /* Removes underline for Link components */
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out; /* Smooth transitions for hover */
+    font-size: 1rem; /* Consistent font size */
+    cursor: pointer; /* Indicates it's clickable */
+    border: none; /* Remove default button border */
 }
 
 .product-card-button:hover {
     background-color: #2563eb;
+    transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+/* Specific styling for the Add to Cart button to differentiate it slightly */
+.product-card-button.add-to-cart {
+    background-color: #28a745; /* Green color for add to cart */
+    margin-top: 0.75rem; /* Adjust margin if needed to be closer to 'View Details' */
+}
+
+.product-card-button.add-to-cart:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .product-list-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Smaller min-width for tablets */
+        gap: 1rem;
+    }
+    .product-card-image {
+        height: 10rem; /* Adjust height for smaller screens */
+    }
+    .product-card-title {
+        font-size: 1rem;
+    }
+    .product-card-price {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .product-list-grid {
+        grid-template-columns: 1fr; /* Single column layout for mobile */
+        padding: 0.5rem;
+    }
+    .product-card {
+        margin: 0 auto; /* Center individual cards on very small screens */
+        max-width: 300px; /* Constrain card width on mobile if needed */
+    }
 }
