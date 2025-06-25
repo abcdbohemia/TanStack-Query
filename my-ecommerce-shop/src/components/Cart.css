@@ -47,11 +47,11 @@
     background-color: #0f0f0f;
 }
 
-.cart-item-title-details {
+.cart-item-details {
     flex-grow: 1; /*exactly how does this work*/
     display: flex;
     flex-direction: column;
-    justify-content: center; /*what does this do*/
+    justify-content: center; /*vertical centering*/
 }
 
 .cart-item-title-link {
@@ -120,6 +120,8 @@
     cursor: pointer;
     font-size: 0.9em;
     transition: background-color 0.2s;
+    width: fit-content; /* Ensure the button only takes up the width of its content */
+    margin-left: auto;  /* Pushes the button to the far right within its flex container (.cart-item) */
 }
 
 .cart-item-remove-button:hover {
@@ -199,7 +201,7 @@
         align-items: center;
     }
 
-    .cart-tem-remove-button {
+    .cart-item-remove-button {
         align-self: center; /*what is align-self? */
     }
 
