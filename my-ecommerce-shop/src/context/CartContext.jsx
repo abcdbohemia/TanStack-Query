@@ -44,7 +44,8 @@ export const CartProvider = ({ children }) => {
             newCartItems = [...prevItems, {...product, quantity: quantityToAdd }];
         }
         console.log('New cart items (after update logic):', newCartItems);
-        });
+        return newCartItems;    
+    });
     };
 
     const removeFromCart = (productId) => {
