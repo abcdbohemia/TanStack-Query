@@ -1,3 +1,5 @@
+
+
 .product-detail-container {
     max-width: 960px; /* Limits the maximum width of the content */
     margin-left: auto; /* Centers the container horizontally */
@@ -147,7 +149,7 @@
 }
 .back-to-products-link:hover {
     text-decoration: none;
-        background-color: #3b82f6; /* Blue background on hover */
+    background-color: #3b82f6; /* Blue background on hover */
     color: white; /* White text on hover */
     transform: translateY(-2px); /* Slight lift effect */
 }
@@ -166,3 +168,4 @@
         box-sizing: border-box; /* Include padding/border in width */
     }
 }
+
