@@ -1,4 +1,7 @@
 .app-main-content {
+  /*always takes up a certain minimum vertical space, even if its actual content is very short.*/
+  /*100vh means "100% of the viewport's height."*/
+  /*The 64px is a design target for the navbar's height, and the CSS for the navbar was intended to produce that height, even if not explicitly stated with height: 64px;*/
   min-height: calc(100vh-64px);
   padding: 1rem;
   max-width: 1200px;

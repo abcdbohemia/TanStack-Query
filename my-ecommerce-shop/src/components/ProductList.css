@@ -91,6 +91,20 @@
     background-color: #218838; /* Darker green on hover */
 }
 
+.loading-message, 
+.error-message {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.1rem;
+  color: #ffffff;
+}
+
+.error-message {
+  color: #dc2626;
+}
+
+
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .product-list-grid {

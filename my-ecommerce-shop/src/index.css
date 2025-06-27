@@ -6,16 +6,3 @@ body {
   line-height: 1.6;
 }
 
-/*Loading and Error Messages*/
-.loading-message, 
-.error-message, 
-.not-found-message {
-  text-align: center;
-  padding: 2rem;
-  font-size: 1.1rem;
-  color: #ffffff;
-}
-
-.error-message {
-  color: #dc2626;
-}
