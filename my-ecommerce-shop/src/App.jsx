@@ -6,11 +6,13 @@ import ProductDetail from './components/ProductDetail';
 import CartPage from './components/CartPage';
 import './App.css';
 
-//we're importing the Link with Navbar import
+//we're importing the {Link} with Navbar import
 // Link is the trigger, while Route is the "destination"
 // :id the colon makes id the name of that URL parameter
-// Routes and Route are control components, they are not visible
-//Route takes JSX element
+
+// while Routes and Route themselves are invisible control components, their effect 
+// is to fill that visible <main> container with specific component (e.g., <ProductList>, 
+// <ProductDetail>, <CartPage>) based on the current URL path.
 
 function App() {
   return (
