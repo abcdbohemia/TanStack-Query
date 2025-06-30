@@ -18,7 +18,7 @@ function ProductDetail() {
     const [quantity, setQuantity] = useState(1);
 
     const { 
-        data: product, 
+        data: product,  
         isLoading, 
         isError, 
         error } = useQuery ({
@@ -47,7 +47,7 @@ function ProductDetail() {
         // The main purpose of parseInt() is to convert a string (from sanitizedValue) into an integer (a whole number).
         const parsedValue = parseInt(sanitizedValue, 10);
 
-
+        setQuantity(parsedValue);
     };
 
     const handleAddToCart = () => {
@@ -57,9 +57,10 @@ function ProductDetail() {
             // This is where the final validation for the cart operation happens.
             const quantityToAdd = Math.max(1, quantity);
             console.log('Adding product:', product.title, 'with quantity:', quantityToAdd);
+            // addToCart function is in CartContext.jsx accessed through useCart()
             addToCart(product, quantityToAdd)
         } else {
-        console.log('Product not loaded yet in ProductDetail.'); // <-- ADD THIS
+        console.log('Product not loaded yet in ProductDetail.'); 
     }
     
     }   

@@ -22,7 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<ProductList />} />
           <Route path="/products" element={<ProductList />} />
-          <Route path="/products/:id" element={<ProductDetail />} /> 
+          <Route path="/products/:id" element={<ProductDetail />} /> {/* :id is a dynamic segment accessible by useParams via RouterDom*/}
           <Route path="/cart" element={<CartPage />} />
           <Route path="*" element={<div><h1>404: Page Not Found</h1><p>Sorry, the page you are looking for does not exist.</p></div>} />
         </Routes>
