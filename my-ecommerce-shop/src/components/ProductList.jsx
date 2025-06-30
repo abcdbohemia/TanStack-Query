@@ -6,14 +6,14 @@ import { useCart } from '../context/CartContext';
 import './ProductList.css';
 
 function ProductList() {
-    const { addToCart } = useCart();
-    const { 
-        data: products, 
+    const { addToCart } = useCart(); //directly accesses the value object that is provided by the CartContext.Provider.
+    const {     // Object Destructuring
+        data: products,   
         isLoading, 
         isError, 
         error 
-    } = useQuery({
-        queryKey: ['products'],
+    } = useQuery({   // useQuery is a function, to run it, you must call it with useQuery(...)
+        queryKey: ['products'],  // { } is an object literal that you are creating on the spot and passing as that single argument to the useQuery function.
         queryFn: fetchProducts
     });
 

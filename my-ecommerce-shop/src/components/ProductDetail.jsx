@@ -8,9 +8,12 @@ import './ProductDetail.css';
 //useParams is a React Hook. It allows functional components to access URL parameters
 
 function ProductDetail() {
-    const { id } = useParams(); //accessing the id of the route path from App.jsx 
-    //With destructuring we're extracting a property from the object on the right
+    const { id } = useParams(); //destructuring useParams() to access the id of the route path from App.jsx 
     // useParams always returns Key: value pairs
+    // The id value (123 in /products/123) is extracted by React Router during the route matching process.
+    // This extracted id is then stored in React Router's internal context.
+    // useParams() is the specific React Hook provided by react-router-dom that allows a functional component 
+    // (like ProductDetail) to read this id value directly from React Router's context.
     const { addToCart } = useCart();
     const [quantity, setQuantity] = useState(1);
 
@@ -41,21 +44,10 @@ function ProductDetail() {
             return; // Exit early
         }
 
-        // Attempt to parse the value to an integer (base 10)
+        // The main purpose of parseInt() is to convert a string (from sanitizedValue) into an integer (a whole number).
         const parsedValue = parseInt(sanitizedValue, 10);
 
-        // Rule 2: If parsed value is NaN (non-numeric input like "abc")
-        // or if it's explicitly typed as '0' (e.g., user types '0', '00')
-        // or if it's a valid number but leads to a visually "zero-like" state (e.g., '0' from '05')
-        // we'll handle setting it to 0 or 1 later for non-valid.
-        if (isNaN(parsedValue)) {
-            // If the input is not a number, revert to 1 to prevent invalid state
-            setQuantity(1);
-        } else {
-            // For valid numbers, ensure it's at least 0 (for typing purposes)
-            // parseInt handles leading zeros (e.g., parseInt("05") returns 5)
-            setQuantity(Math.max(0, parsedValue));
-        }
+
     };
 
     const handleAddToCart = () => {

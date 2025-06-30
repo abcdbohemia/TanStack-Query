@@ -111,7 +111,7 @@ export const CartProvider = ({ children }) => {
 // that is created by the createContext() method
 export const useCart = () => useContext(CartContext);
 
-//You import and use the useCart hook (or any other context hook) only 
+//You import and use the useCart CUSTOM hook (or any other context hook) only 
 // in the functional React component (or custom hook) that specifically 
 // needs to access or modify the information provided by that context.
 

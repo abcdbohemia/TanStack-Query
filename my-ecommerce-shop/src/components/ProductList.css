@@ -1,6 +1,8 @@
 .product-list-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    /* all those columns will attempt to take up the same amount of available 
+    space once they are wider than their minimum of 200px.*/
     gap: 1.5rem;
     padding: 1rem;
     max-width: 1200px; /* Optional: Constrain max width for very large screens */
@@ -16,7 +18,7 @@
     flex-direction: column;
     background-color: white;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-}
+} /* ease-in-out: This is a timing function. It controls the speed or pace of the animation over its duration. */
 
 .product-card:hover {
     transform: translateY(-5px); /* Lift card slightly on hover */
@@ -26,7 +28,7 @@
 
 .product-card-link {
     display: flex;
-    justify-content: center; /* Vertically centers the image within the link (useful if image height varies)*/
+    justify-content: center; /*centers the image along the horizontal (main axis) within the link 
     padding: 0.5rem; /* Padding around the image */
     }
 
