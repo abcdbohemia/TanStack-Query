@@ -1,0 +1,7 @@
+Application Data Flow and Component Responsibilities
+
+ProductList fetches the entire product array (e.g., via fetchProducts from api.jsx). It then uses this data to display a list and create <Link> components for individual product details.
+
+ProductDetail does not receive the product data directly from ProductList. Instead, when a ProductList <Link> is clicked (or a URL like /products/123 is directly accessed), React Router updates the browser's URL. ProductDetail then uses useParams() to extract the specific id directly from that URL. With this id, ProductDetail performs its own, separate fetch (e.g., via fetchProductById) to get the detailed information for that single product. This ensures ProductDetail is a robust, independent, and shareable page.
+
+The Cart component does not fetch any product data. Instead, it receives the full product object (along with the chosen quantity) when an item is added to the cart. This product object is passed to the addToCart function from whichever component initiated the add-to-cart action (e.g., ProductDetail after it fetches the product, or ProductList using a product from its already-fetched array). The Cart then manages this as an in-memory collection, using the stored product details for display and calculations without needing further API calls.

@@ -51,7 +51,7 @@
     flex-grow: 1; /*exactly how does this work*/
     display: flex;
     flex-direction: column;
-    justify-content: center; /*vertical centering*/
+    justify-content: center; /*vertical centering because main axis is vertical with flex-direction: colimn*/
 }
 
 .cart-item-title-link {
