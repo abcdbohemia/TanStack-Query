@@ -152,17 +152,17 @@
     }
   ],
 
-  "tags": [
-    "classic",
-    "crime",
-    "english",
-    "fiction",
-    "french",
-    "history",
-    "love",
-    "magical",
-    "mystery"
-  ]
+    "tags": [
+  { "id": "classic", "name": "classic" },
+  { "id": "crime", "name": "crime" },
+  { "id": "english", "name": "english" },
+  { "id": "fiction", "name": "fiction" },
+  { "id": "french", "name": "french" },
+  { "id": "history", "name": "history" },
+  { "id": "love", "name": "love" },
+  { "id": "magical", "name": "magical" },
+  { "id": "mystery", "name": "mystery" }
+]
   
 }
 

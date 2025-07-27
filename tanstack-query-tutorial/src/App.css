@@ -11,7 +11,7 @@ body {
 .post {
     display: flex;
     align-items: center;
-    gap: 5;
+    gap: 5px;
     background-color: rgb(217, 221, 167);
     border-radius: 5px;
     padding: 10px;
@@ -69,7 +69,3 @@ body {
     align-items: center;
 }
 
-.my-element {
-  -webkit-background-clip: padding-box; /* Or whatever value */
-  background-clip: padding-box;       /* Or whatever value */
-}

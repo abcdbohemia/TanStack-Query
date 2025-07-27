@@ -118,8 +118,8 @@ const PostList = () => {
                     {post.tags && Array.isArray(post.tags) && (
                         <div className="tag-container">
                             {post.tags.map((tag) => (
-                                <span key={tag.id} className="tag-span">
-                                    {tag.name}
+                                <span key={tag} className="tag-span">
+                                    {tag}
                                 </span>
                             ))}
                         </div>
