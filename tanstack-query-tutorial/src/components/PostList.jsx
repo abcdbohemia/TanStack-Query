@@ -92,9 +92,9 @@ const PostList = () => {
                     {!areTagsLoading &&
                         !areTagsError &&
                         tagsData?.map((tag) => (
-                            <div key={tag}>
-                                <input name={tag} id={tag} type="checkbox" /> 
-                                <label htmlFor={tag}>{tag}</label>
+                            <div key={tag.id}>
+                                <input name={tag.name} id={tag.name} type="checkbox" /> 
+                                <label htmlFor={tag.name}>{tag.name}</label>
                             </div>
                         ))}
                 </div>
@@ -118,8 +118,8 @@ const PostList = () => {
                     {post.tags && Array.isArray(post.tags) && (
                         <div className="tag-container">
                             {post.tags.map((tag) => (
-                                <span key={tag} className="tag-span">
-                                    {tag}
+                                <span key={tag.id} className="tag-span">
+                                    {tag.name}
                                 </span>
                             ))}
                         </div>

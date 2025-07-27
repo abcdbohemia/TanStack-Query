@@ -68,3 +68,8 @@ body {
     gap: 10px;
     align-items: center;
 }
+
+.my-element {
+  -webkit-background-clip: padding-box; /* Or whatever value */
+  background-clip: padding-box;       /* Or whatever value */
+}
